@@ -30,20 +30,20 @@ def create_ANN(input_shape, output_shape):
     print(model.summary())
     return model
 
-label = np.loadtxt("../../MFEA/training/UpperGly/EX0/UpperGly_Labels_EX0_Seed0_20231030.dat")
-flux = np.loadtxt("../../MFEA/training/UpperGly/EX0/UpperGly_Fluxes_EX0_Seed0_20231030.dat")
+label = np.loadtxt("UpperGly/UpperGly_Labels.dat")
+flux = np.loadtxt("UpperGly/UpperGly_Fluxes.dat")
 net_flux = [0,1,2]
 exchange_flux = [3,4,5,6]
 
 X_train, X_test, y_train, y_test = train_test_split(label, flux, test_size=0.2, random_state=0)
 X_test, X_val, y_test, y_val = train_test_split(X_test, y_test, test_size=0.5, random_state=0)
 
-np.savetxt("../../MFEA/training/UpperGly/EX0/flux_test_UpperGly_20231030.dat",y_test,fmt="%.3f")
-np.savetxt("../../MFEA/training/UpperGly/EX0/label_test_UpperGly_20231030.dat",X_test,fmt="%.3f")
-np.savetxt("../../MFEA/training/UpperGly/EX0/flux_train_UpperGly_20231030.dat",y_train,fmt="%.3f")
-np.savetxt("../../MFEA/training/UpperGly/EX0/label_train_UpperGly_20231030.dat",X_train,fmt="%.3f")
-np.savetxt("../../MFEA/training/UpperGly/EX0/flux_val_UpperGly_20231030.dat",y_val,fmt="%.3f")
-np.savetxt("../../MFEA/training/UpperGly/EX0/label_val_UpperGly_20231030.dat",X_val,fmt="%.3f")
+np.savetxt("UpperGly/flux_test_UpperGly.dat",y_test,fmt="%.3f")
+np.savetxt("UpperGly/label_test_UpperGly.dat",X_test,fmt="%.3f")
+np.savetxt("UpperGly/flux_train_UpperGly.dat",y_train,fmt="%.3f")
+np.savetxt("UpperGly/label_train_UpperGly.dat",X_train,fmt="%.3f")
+np.savetxt("UpperGly/flux_val_UpperGly.dat",y_val,fmt="%.3f")
+np.savetxt("UpperGly/label_val_UpperGly.dat",X_val,fmt="%.3f")
 
 ## Data transformation configuration 4
 y_train[:,net_flux] = np.piecewise(y_train[:,net_flux],[y_train[:,net_flux]<3.89048,y_train[:,net_flux]>=3.89048],[lambda y_train: 1/(1+np.exp(-y_train)),lambda y_train: np.log10(y_train)/np.log10(4)])
@@ -61,7 +61,7 @@ ANN_regression.compile(
 )
 
 # Create callback
-filepath = '../model/UpperGly_Seed0_EX0_ANN_C2-4_20231030.h5'
+filepath = '../model/UpperGly.h5'
 checkpoint = ModelCheckpoint(filepath=filepath,
                              monitor='val_loss',
                              verbose=1,
@@ -72,7 +72,7 @@ callbacks = [checkpoint]
 
 # Save the ANN architecture to json
 ANN_regression_json = ANN_regression.to_json()
-with open("../model/UpperGly_Seed0_EX0_ANN_C2-4_20231030.json", "w") as json_file:
+with open("../model/UpperGly.json", "w") as json_file:
     json_file.write(ANN_regression_json)
     
 # Fit the ANN to the training set
@@ -85,7 +85,7 @@ history = ANN_regression.fit(
 pred_model = model_from_json(ANN_regression_json)
 
 # Load weights from the best model into ANN model
-pred_model.load_weights("../model/UpperGly_Seed0_EX0_ANN_C2-4_20231030.h5")
+pred_model.load_weights("../model/UpperGly.h5")
 
 # Compile the loaded ANN model
 pred_model.compile(optimizer='adam', metrics=['mae'])
@@ -106,4 +106,4 @@ y_test[:,exchange_flux] = np.piecewise(y_test[:,exchange_flux],[y_test[:,exchang
 y_pred[:,exchange_flux] = np.maximum(0, y_pred[:,exchange_flux]) # Ensure exchange fluxes >= 0
 print("mae: ",np.mean(np.abs(y_test - y_pred)))
 
-np.savetxt("../output/UpperGly_1-2-13C/flux_pred_UpperGly_C2-4_EX0_20231030.dat", y_pred, fmt="%.6f")
+np.savetxt("UpperGly_1-2-13C/flux_pred_UpperGly.dat", y_pred, fmt="%.6f")

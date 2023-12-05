@@ -30,17 +30,17 @@ def create_ANN(input_shape, output_shape):
     print(model.summary())
     return model
 
-label = np.loadtxt("../../MFEA/training/GlyPPP_13C/labeling_1of10_GlyPPP_seed1_20230525.dat")
-label = np.concatenate((label,np.loadtxt("../../MFEA/training/GlyPPP_13C/labeling_2of10_GlyPPP_seed1_20230525.dat")))
-label = np.concatenate((label,np.loadtxt("../../MFEA/training/GlyPPP_13C/labeling_3of10_GlyPPP_seed1_20230525.dat")))
-label = np.concatenate((label,np.loadtxt("../../MFEA/training/GlyPPP_13C/labeling_4of10_GlyPPP_seed1_20230525.dat")))
-label = np.concatenate((label,np.loadtxt("../../MFEA/training/GlyPPP_13C/labeling_5of10_GlyPPP_seed1_20230525.dat")))
-label = np.concatenate((label,np.loadtxt("../../MFEA/training/GlyPPP_13C/labeling_6of10_GlyPPP_seed1_20230525.dat")))
-label = np.concatenate((label,np.loadtxt("../../MFEA/training/GlyPPP_13C/labeling_7of10_GlyPPP_seed1_20230525.dat")))
-label = np.concatenate((label,np.loadtxt("../../MFEA/training/GlyPPP_13C/labeling_8of10_GlyPPP_seed1_20230525.dat")))
-label = np.concatenate((label,np.loadtxt("../../MFEA/training/GlyPPP_13C/labeling_9of10_GlyPPP_seed1_20230525.dat")))
-label = np.concatenate((label,np.loadtxt("../../MFEA/training/GlyPPP_13C/labeling_10of10_GlyPPP_seed1_20230525.dat")))
-flux = np.loadtxt("../../MFEA/training/GlyPPP_13C/fluxes_GlyPPP_1M_seed1_20230525.dat")
+label = np.loadtxt("GlyPPP_13C/labeling_1of10_GlyPPP.dat")
+label = np.concatenate((label,np.loadtxt("labeling_2of10_GlyPPP.dat")))
+label = np.concatenate((label,np.loadtxt("labeling_3of10_GlyPPP.dat")))
+label = np.concatenate((label,np.loadtxt("labeling_4of10_GlyPPP.dat")))
+label = np.concatenate((label,np.loadtxt("labeling_5of10_GlyPPP.dat")))
+label = np.concatenate((label,np.loadtxt("labeling_6of10_GlyPPP.dat")))
+label = np.concatenate((label,np.loadtxt("labeling_7of10_GlyPPP.dat")))
+label = np.concatenate((label,np.loadtxt("labeling_8of10_GlyPPP.dat")))
+label = np.concatenate((label,np.loadtxt("labeling_9of10_GlyPPP.dat")))
+label = np.concatenate((label,np.loadtxt("labeling_10of10_GlyPPP.dat")))
+flux = np.loadtxt("fluxes_GlyPPP_1M.dat")
 
 net_flux = [0,1,2,3,4,5,6,7,8,9,10,11,12]
 exchange_flux = [13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]
@@ -50,7 +50,6 @@ X_test, X_val, y_test, y_val = train_test_split(X_test, y_test, test_size=0.5, r
 
 #np.savetxt("flux_test_GlyPPP_1M.dat",y_test,fmt="%.6f")
 #np.savetxt("label_test_GlyPPP_1M.dat",X_test,fmt="%.6f")
-#killer = 190/0
 
 ## Data transformation configuration 4
 y_train[:,net_flux] = np.piecewise(y_train[:,net_flux],[y_train[:,net_flux]<3.89048,y_train[:,net_flux]>=3.89048],[lambda y_train: 1/(1+np.exp(-y_train)),lambda y_train: np.log10(y_train)/np.log10(4)])
@@ -69,7 +68,7 @@ ANN_regression.compile(
 )
 
 # Create callback
-filepath = '../../MFEA/GlyPPP_1M_Seed1.h5'
+filepath = 'GlyPPP_1M_Seed1.h5'
 checkpoint = ModelCheckpoint(filepath=filepath,
                              monitor='val_loss',
                              verbose=1,
@@ -82,7 +81,7 @@ callbacks = [checkpoint]
 loss, acc = ANN_regression.evaluate(X_test, y_test, verbose=2)
 print("Untrained model, accuracy: {:5.2f}%".format(100 * acc))
 
-ANN_regression.load_weights('../../MFEA/GlyPPP_1M_Seed1.h5')
+ANN_regression.load_weights('GlyPPP_1M_Seed1.h5')
     
 loss, acc = ANN_regression.evaluate(X_test, y_test, verbose=2)
 print("Restored model, accuracy: {:5.2f}%".format(100 * acc))

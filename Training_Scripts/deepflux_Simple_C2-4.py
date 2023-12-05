@@ -30,21 +30,20 @@ def create_ANN(input_shape, output_shape):
     print(model.summary())
     return model
 
-label = np.loadtxt("../../MFEA/training/Simple/labeling_Simple_Seed0_logUniXch_20231005.dat")
-flux = np.loadtxt("../../MFEA/training/Simple/fluxes_Simple_Seed0_logUniXch_20231005.dat")
+label = np.loadtxt("Simple/labeling_Simple.dat")
+flux = np.loadtxt("Simple/fluxes_Simple.dat")
 net_flux = [0,1]
 exchange_flux = [2,3,4,5]
 
 X_train, X_test, y_train, y_test = train_test_split(label, flux, test_size=0.2, random_state=0)
 X_test, X_val, y_test, y_val = train_test_split(X_test, y_test, test_size=0.5, random_state=0)
 
-np.savetxt("../output/Simple/flux_test_Simple_C2-4_logUniXch_20231005.dat", y_test, fmt="%.4f")
-np.savetxt("../output/Simple/flux_train_Simple_C2-4_logUniXch_20231005.dat", y_train, fmt="%.4f")
-np.savetxt("../output/Simple/flux_val_Simple_C2-4_logUniXch_20231005.dat", y_val, fmt="%.4f")
-np.savetxt("../output/Simple/labeling_test_Simple_C2-4_logUniXch_20231005.dat", X_test, fmt="%.4f")
-np.savetxt("../output/Simple/labeling_train_Simple_C2-4_logUniXch_20231005.dat", X_train, fmt="%.4f")
-np.savetxt("../output/Simple/labeling_val_Simple_C2-4_logUniXch_20231005.dat", X_val, fmt="%.4f")
-# kill = 1/0
+np.savetxt("Simple/flux_test_Simple.dat", y_test, fmt="%.4f")
+np.savetxt("Simple/flux_train_Simple.dat", y_train, fmt="%.4f")
+np.savetxt("Simple/flux_val_Simple.dat", y_val, fmt="%.4f")
+np.savetxt("Simple/labeling_test_Simple.dat", X_test, fmt="%.4f")
+np.savetxt("Simple/labeling_train_Simple.dat", X_train, fmt="%.4f")
+np.savetxt("Simple/labeling_val_Simple.dat", X_val, fmt="%.4f")
 
 ## Data transformation configuration 4
 y_train[:,net_flux] = np.piecewise(y_train[:,net_flux],[y_train[:,net_flux]<3.89048,y_train[:,net_flux]>=3.89048],[lambda y_train: 1/(1+np.exp(-y_train)),lambda y_train: np.log10(y_train)/np.log10(4)])
@@ -62,7 +61,7 @@ ANN_regression.compile(
 )
 
 # Create callback
-filepath = '../model/Simple_ANN_C2-4_logUniXch_20231026.h5' # Change for each configuration
+filepath = 'Simple_ANN.h5' # Change for each configuration
 checkpoint = ModelCheckpoint(filepath=filepath,
                              monitor='val_loss',
                              verbose=1,
@@ -73,7 +72,7 @@ callbacks = [checkpoint]
 
 # Save the ANN architecture to json
 ANN_regression_json = ANN_regression.to_json()
-with open("../model/Simple_ANN_C2-4.json", "w") as json_file: # Change for each configuration
+with open("Simple_ANN_C2-4.json", "w") as json_file: # Change for each configuration
     json_file.write(ANN_regression_json)
     
 # Fit the ANN to the training set
@@ -86,7 +85,7 @@ history = ANN_regression.fit(
 pred_model = model_from_json(ANN_regression_json)
 
 # Load weights from the best model into ANN model
-pred_model.load_weights("../model/Simple_ANN_C2-4_logUniXch_20231026.h5") # Change for each configuration
+pred_model.load_weights("Simple_ANN.h5") # Change for each configuration
 
 # Compile the loaded ANN model
 pred_model.compile(optimizer='adam', metrics=['mae'])
@@ -108,4 +107,4 @@ y_test[:,exchange_flux] = np.piecewise(y_test[:,exchange_flux],[y_test[:,exchang
 y_pred[:,exchange_flux] = np.maximum(0, y_pred[:,exchange_flux]) # Ensure exchange fluxes >= 0
 print("mae: ",np.mean(np.abs(y_test - y_pred)))
 
-np.savetxt("../output/Simple/flux_pred_Simple_C2-4_logUniXch_20231026.dat", y_pred, fmt="%.6f")
+np.savetxt("Simple/flux_pred_Simple.dat", y_pred, fmt="%.6f")
