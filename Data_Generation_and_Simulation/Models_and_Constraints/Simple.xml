@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fluxml xmlns="http://www.13cflux.net/fluxml">	
+<info>	
+	<name>Jun_Park_antoniewicz test</name>
+	<version>1.0</version>
+	<comment/>
+<signature>ReeI/iel1g91z+O2AkyVj9HTHXzbLbDtGgL66kDGfMbI2J8N+vZw4L+OBJeYjFaFRO742nODf7+A1jpNl+GKeazAmrSpl3hHTLNd+Vx3BSJyOFbqW/LoMaX1GwWZgX766e4Z4IT/xejLHPElYR1ka0/5BEuujCxTkkLfttsMEe21q69qhcAhSqKqMz7glwQDBFH20d8EPVCKUQ3rEcS+Yr/+bg4oXRQ1DnHvh1gq6A1aI6tpgBct7XUs5LcNCSbyh+mndm/ibQJZioc+vDbHfXcfD+RnPFGEaeI66l/liHJHyqUtSyOZi45aeh1H+dGu8kzjvQVLcMB3L9+i2Kvggg==</signature></info>	
+<reactionnetwork>		
+	<metabolitepools>
+		<pool atoms="3" id="molA"/>
+		<pool atoms="3" id="molB"/>
+		<pool atoms="2" id="molC"/>
+		<pool atoms="3" id="molD"/>
+		<pool atoms="1" id="molE"/>
+		<pool atoms="3" id="molF"/>
+	</metabolitepools>	
+	<reaction id="v1">	
+		<reduct cfg="abc" id="molA"/>
+		<rproduct cfg="abc" id="molB"/>
+	</reaction>	
+	<reaction id="v2">	
+		<reduct cfg="abc" id="molB"/>
+		<rproduct cfg="abc" id="molD"/>
+	</reaction>	
+	<reaction id="v3">	
+		<reduct cfg="abc" id="molB"/>
+		<rproduct cfg="bc" id="molC"/>
+		<rproduct cfg="a" id="molE"/>
+	</reaction>	
+	<reaction id="v4">	
+		<reduct cfg="abc" id="molB"/>
+		<reduct cfg="AB" id="molC"/>
+		<rproduct cfg="bcA" id="molD"/>
+		<rproduct cfg="a" id="molE"/>
+		<rproduct cfg="B" id="molE"/>
+	</reaction>	
+	<reaction id="v5">	
+		<reduct cfg="abc" id="molD"/>
+		<rproduct cfg="abc" id="molF"/>
+	</reaction>
+	<reaction id="EX_molE">	
+		<reduct cfg="a" id="molE"/>
+	</reaction>	
+	<reaction id="EX_molF">	
+		<reduct cfg="abc" id="molF"/>
+	</reaction>
+</reactionnetwork>		
+<constraints>							
+	<net>						
+		<textual>					
+			v1=1;
+		</textual>					
+	</net>						
+	<xch>						
+		<textual>	
+			v3=0;
+			v4=0;
+			v5=0;
+		</textual>					
+	</xch>						
+</constraints>							
+<configuration name="default" stationary="true">							
+	<input pool="molA" type="isotopomer">						
+		<label cfg="010">1.0</label>					
+	</input>						
+	<measurement>						
+		<model>					
+			<labelingmeasurement>				
+				<group id="ms_molF" scale="auto">			
+					<textual>molF[1,2,3]#M0,1,2,3</textual>		
+				</group>			
+			</labelingmeasurement>				
+			<fluxmeasurement>				
+			
+			</fluxmeasurement>				
+		</model>					
+		<data>			
+			<datum id="ms_molF" stddev="0.003" weight="0">	0.0001	</datum>
+			<datum id="ms_molF" stddev="0.003" weight="1">	0.8008	</datum>
+			<datum id="ms_molF" stddev="0.003" weight="2">	0.1982	</datum>
+			<datum id="ms_molF" stddev="0.003" weight="3">	0.0009	</datum>
+			
+		</data>			
+	</measurement>				
+	<simulation method="auto" type="auto">				
+		<variables>			
+			<fluxvalue flux="v3" type="net">	0.1	</fluxvalue>
+					
+		</variables>			
+	</simulation>				
+</configuration>					
+</fluxml>

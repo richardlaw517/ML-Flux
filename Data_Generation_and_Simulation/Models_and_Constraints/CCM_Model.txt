@@ -1,0 +1,223 @@
+#-------------------------------------------------------------------------------
+# Name:        Example_0_toymodel_model.txt
+#              Model definition file for Example 0 of mfapy
+#
+# Author:      Fumio_Matsuda
+#
+# Created:     12/06/2018
+# Copyright:   (c) Fumio_Matsuda 2021
+# Licence:     MIT license
+#-------------------------------------------------------------------------------
+#
+# Definition of metabolic reactions
+//Reactions
+INGLC	GLCIN --> GLC	GLCIN --> GLC	ABCDEF --> ABCDEF	noid	-300	300
+INCO2	CO2IN --> CO2	CO2IN --> CO2	A --> A	noid	-300	300
+EXCO2	CO2 --> CO2EX	nd	nd	noid	-300	300
+hkf	GLC --> G6P	GLC --> G6P	ABCDEF --> ABCDEF	noid	-300	300
+hkr	G6P --> GLC	G6P --> GLC	ABCDEF --> ABCDEF	noid	-300	300
+pgif	G6P --> F6P	G6P --> F6P	ABCDEF --> ABCDEF	noid	-300	300
+pgir	F6P --> G6P	F6P --> G6P	ABCDEF --> ABCDEF	noid	-300	300
+pfkf	F6P --> FBP	F6P --> FBP	ABCDEF --> ABCDEF	noid	-300	300
+pfkr	FBP --> F6P	FBP --> F6P	ABCDEF --> ABCDEF	noid	-300	300
+fbaf	FBP --> DHAP + GAP	FBP --> DHAP + GAP	ABCDEF --> CBA + DEF	noid	-300	300
+fbar	DHAP + GAP --> FBP	DHAP + GAP --> FBP	CBA + DEF --> ABCDEF	noid	-300	300
+tpif	DHAP --> GAP	DHAP --> GAP	ABC --> ABC	noid	-300	300
+tpir	GAP --> DHAP	GAP --> DHAP	ABC --> ABC	noid	-300	300
+gapdf	GAP --> BPG	GAP --> BPG	ABC --> ABC	noid	-300	300
+gapdr	BPG --> GAP	BPG --> GAP	ABC --> ABC	noid	-300	300
+pgkf	BPG --> PGA	BPG --> PGA	ABC --> ABC	noid	-300	300
+pgkr	PGA --> BPG	PGA --> BPG	ABC --> ABC	noid	-300	300
+enof	PGA --> PEP	PGA --> PEP	ABC --> ABC	noid	-300	300
+enor	PEP --> PGA	PEP --> PGA	ABC --> ABC	noid	-300	300
+pykf	PEP --> PYR	PEP --> PYR	ABC --> ABC	noid	-300	300
+pykr	PYR --> PEP	PYR --> PEP	ABC --> ABC	noid	-300	300
+ldhf	PYR --> LAC	PYR --> LAC	ABC --> ABC	noid	-300	300
+ldhr	LAC --> PYR	LAC --> PYR	ABC --> ABC	noid	-300	300
+EXDHAP	DHAP --> DHAPEX	nd	nd	noid	-300	300
+EXPGA	PGA --> PGAEX	nd	nd	noid	-300	300
+EXPYR	PYR --> PYREX	nd	nd	noid	-300	300
+EXLAC	LAC --> LACEX	nd	nd	noid	-300	300
+EXG6P	G6P --> G6PEX	nd	nd	noid	-300	300
+ppckf	OAA --> PEP + CO2	OAA --> PEP + CO2	ABCD --> ABC + D	noid	-300	300
+ppckr	PEP + CO2 --> OAA	PEP + CO2 --> OAA	ABC + D --> ABCD	noid	-300	300
+mef	MAL --> PYR + CO2	MAL --> PYR + CO2	ABCD --> ABC + D	noid	-300	300
+mer	PYR + CO2 --> MAL	PYR + CO2 --> MAL	ABC + D --> ABCD	noid	-300	300
+pcf	PYR + CO2 --> OAA	PYR + CO2 --> OAA	ABC + D --> ABCD	noid	-300	300
+pcr	OAA --> PYR + CO2	OAA --> PYR + CO2	ABCD --> ABC + D	noid	-300	300
+g6pdhf	G6P --> m6PG	G6P --> m6PG	ABCDEF --> ABCDEF	noid	-300	300
+g6pdhr	m6PG --> G6P	m6PG --> G6P	ABCDEF --> ABCDEF	noid	-300	300
+gndf	m6PG --> Ru5P + CO2	m6PG --> Ru5P + CO2	ABCDEF --> BCDEF + A	noid	-300	300
+gndr	Ru5P + CO2 --> m6PG	Ru5P + CO2 --> m6PG	BCDEF + A --> ABCDEF	noid	-300	300
+rpif	Ru5P --> R5P	Ru5P --> R5P	ABCDE --> ABCDE	noid	-300	300
+rpir	R5P --> Ru5P	R5P --> Ru5P	ABCDE --> ABCDE	noid	-300	300
+rpef	Ru5P --> X5P	Ru5P --> X5P	ABCDE --> ABCDE	noid	-300	300
+rper	X5P --> Ru5P	X5P --> Ru5P	ABCDE --> ABCDE	noid	-300	300
+tkt2f	X5P + E4P --> GAP + F6P	X5P + E4P --> GAP + F6P	ABCDE + abcd --> CDE + ABabcd	noid	-300	300
+tkt2r	GAP + F6P --> X5P + E4P	GAP + F6P --> X5P + E4P	CDE + ABabcd --> ABCDE + abcd	noid	-300	300
+tkt1f	X5P + R5P --> S7P + GAP	X5P + R5P --> S7P + GAP	ABCDE + abcde --> ABabcde + CDE	noid	-300	300
+tkt1r	S7P + GAP --> X5P + R5P	S7P + GAP --> X5P + R5P	ABabcde + CDE --> ABCDE + abcde	noid	-300	300
+talf	GAP + S7P --> E4P + F6P	GAP + S7P --> E4P + F6P	ABC + abcdefg --> defg + abcABC	noid	-300	300
+talr	E4P + F6P --> GAP + S7P	E4P + F6P --> GAP + S7P	defg + abcABC --> ABC + abcdefg	noid	-300	300
+SBAf	DHAP + E4P --> SBP	DHAP + E4P --> SBP	ABC + defg --> ABCdefg	noid	-300	300
+SBAr	SBP --> DHAP + E4P	SBP --> DHAP + E4P	ABCdefg --> ABC + defg	noid	-300	300
+SBPasef	SBP --> S7P	SBP --> S7P	ABCdefg --> ABCdefg	noid	-300	300
+SBPaser	S7P --> SBP	S7P --> SBP	ABCdefg --> ABCdefg	noid	-300	300
+EXR5P	R5P --> R5PEX	nd	nd	noid	-300	300
+EXOAA	OAA --> OAAEX	nd	nd	noid	-300	300
+pdhf	PYR --> AcCoA + CO2	PYR --> AcCoA + CO2	ABC --> BC + A	noid	-300	300
+pdhr	AcCoA + CO2 --> PYR	AcCoA + CO2 --> PYR	BC + A --> ABC	noid	-300	300
+INAC	ACIN --> AcCoA	ACIN --> AcCoA	ab --> ab	noid	-300	300
+csf	OAA + AcCoA --> CitICit	OAA + AcCoA --> CitICit	ABCD + ab --> DCBAba	noid	-300	300
+csr	CitICit --> OAA + AcCoA	CitICit --> OAA + AcCoA	DCBAba --> ABCD + ab	noid	-300	300
+acitlf	CitICit --> MAL + AcCoAcyt	CitICit --> MAL + AcCoAcyt	DCBAba --> ABCD + ab	noid	-300	300
+acitlr	MAL + AcCoAcyt --> CitICit	MAL + AcCoAcyt --> CitICit	ABCD + ab --> DCBAba	noid	-300	300
+icdhf	CitICit --> OGA + CO2	CitICit --> OGA + CO2	ABCDEF --> ABCEF + D	noid	-300	300
+icdhr	OGA + CO2 --> CitICit	OGA + CO2 --> CitICit	ABCEF + D --> ABCDEF	noid	-300	300
+akgdhf	OGA --> SuccCoA + CO2	OGA --> SuccCoA + CO2	ABCDE --> BCDE + A	noid	-300	300
+akgdhr	SuccCoA + CO2 --> OGA	SuccCoA + CO2 --> OGA	BCDE + A --> ABCDE	noid	-300	300
+sucoasf	SuccCoA --> Succ	SuccCoA --> Succ	ABCD --> ABCD	noid	-300	300
+sucoasr	Succ --> SuccCoA	Succ --> SuccCoA	ABCD --> ABCD	noid	-300	300
+sucdf	Succ --> Fum	Succ --> Fum	ABCD --> ABCD	noid	-300	300
+sucdr	Fum --> Succ	Fum --> Succ	ABCD --> ABCD	noid	-300	300
+fumf	Fum --> MAL	Fum --> MAL	ABCD --> ABCD	noid	-300	300
+fumr	MAL --> Fum	MAL --> Fum	ABCD --> ABCD	noid	-300	300
+mdhf	MAL --> OAA	MAL --> OAA	ABCD --> ABCD	noid	-300	300
+mdhr	OAA --> MAL	OAA --> MAL	ABCD --> ABCD	noid	-300	300
+PYRAlaf	PYR + Glu --> Ala + OGA	PYR + Glu --> Ala + OGA	ABC + DEFGH --> ABC + DEFGH	noid	-300	300
+PYRAlar	Ala + OGA --> PYR + Glu	Ala + OGA --> PYR + Glu	ABC + DEFGH --> ABC + DEFGH	noid	-300	300
+EXPYRAla	Ala --> AlaEX	nd	nd	noid	-300	300
+OGAGluf	OGA --> Glu	OGA --> Glu	ABCDE --> ABCDE	noid	-300	300
+OGAGlur	Glu --> OGA	Glu --> OGA	ABCDE --> ABCDE	noid	-300	300
+INGln	GlnIN --> Gln	GlnIN --> Gln	ABCDE --> ABCDE	noid	-300	300
+INGlu	GluIN --> Glu	GluIN --> Glu	ABCDE --> ABCDE	noid	-300	300
+OGAGlnf	Glu --> Gln	Glu --> Gln	ABCDE --> ABCDE	noid	-300	300
+OGAGlnr	Gln --> Glu	Gln --> Glu	ABCDE --> ABCDE	noid	-300	300
+EXGln	Gln --> GlnEX	nd	nd	noid	-300	300
+INOAA	OAAIN --> OAA	OAAIN --> OAA	ABCD --> ABCD	noid	-300	300
+EXOGAGlu	Glu --> GluEX	nd	nd	noid	-300	300
+EXACcyt	AcCoAcyt --> AcCoAcytEX	nd	nd	noid	-300	300
+#
+# Definition of metabolites
+//Metabolites
+CO2IN	1	no	carbonsource	no	noid	0.0	300
+CO2	1	no	no	no	noid	0.0	300
+CO2EX	1	no	no	excreted	noid	0.0	300
+GLCIN	6	no	carbonsource	no	noid	0.0	300
+GLC	6	no	no	no	noid	0.0	300
+G6P	6	no	no	no	noid	0.0	300
+G6PEX	6	no	no	excreted	noid	0.0	300
+F6P	6	no	no	no	noid	0.0	300
+FBP	6	no	no	no	noid	0.0	300
+GAP	3	no	no	no	noid	0.0	300
+DHAP	3	no	no	no	noid	0.0	300
+DHAPEX	3	no	no	excreted	noid	0.0	300
+BPG	3	no	no	no	noid	0.0	300
+PGA	3	no	no	no	noid	0.0	300
+PGAEX	3	no	no	excreted	noid	0.0	300
+PEP	3	no	no	no	noid	0.0	300
+PYR	3	no	no	no	noid	0.0	300
+PYREX	3	no	no	excreted	noid	0.0	300
+LAC	3	no	no	no	noid	0.0	300
+LACEX	3	no	no	excreted	noid	0.0	300
+OAA	4	no	no	no	noid	0.0	300
+OAAEX	4	no	no	excreted	noid	0.0	300
+MAL	4	no	no	no	noid	0.0	300
+m6PG	6	no	no	no	noid	0.0	300
+Ru5P	5	no	no	no	noid	0.0	300
+R5P	5	no	no	no	noid	0.0	300
+R5PEX	5	no	no	excreted	noid	0.0	300
+X5P	5	no	no	no	noid	0.0	300
+S7P	7	no	no	no	noid	0.0	300
+SBP	7	no	no	no	noid	0.0	300
+E4P	4	no	no	no	noid	0.0	300
+AcCoA	2	no	no	no	noid	0.0	300
+CitICit	6	no	no	no	noid	0.0	300
+OGA	5	no	no	no	noid	0.0	300
+SuccCoA	4	no	no	no	noid	0.0	300
+Succ	4	no	no	no	noid	0.0	300
+Fum	4	no	no	no	noid	0.0	300
+GluIN	5	no	carbonsource	no	noid	0.0	300
+Glu	5	no	no	no	noid	0.0	300
+GluEX	5	no	no	excreted	noid	0.0	300
+Ala	3	no	no	no	noid	0.0	300
+AlaEX	3	no	no	excreted	noid	0.0	300
+GlnIN	5	no	carbonsource	no	noid	0.0	300
+Gln	5	no	no	no	noid	0.0	300
+GlnEX	5	no	no	excreted	noid	0.0	300
+AcCoAcyt	2	no	no	no	noid	0.0	300
+AcCoAcytEX	2	no	no	excreted	noid	0.0	300
+ACIN	2	no	carbonsource	no	noid	0.0	300
+OAAIN	4	no	carbonsource	no	noid	0.0	300
+#
+# Definition of reversible reactions
+//Reversible_reactions
+hk	hkf	hkr	noid	-300	300
+pgi	pgif	pgir	noid	-300	300
+pfk	pfkf	pfkr	noid	-300	300
+fba	fbaf	fbar	noid	-300	300
+tpi	tpif	tpir	noid	-300	300
+gapd	gapdf	gapdr	noid	-300	300
+pgk	pgkf	pgkr	noid	-300	300
+eno	enof	enor	noid	-300	300
+pyk	pykf	pykr	noid	-300	300
+ldh	ldhf	ldhr	noid	-300	300
+ppck	ppckf	ppckr	noid	-300	300
+me	mef	mer	noid	-300	300
+pc	pcf	pcr	noid	-300	300
+g6pdh	g6pdhf	g6pdhr	noid	-300	300
+gnd	gndf	gndr	noid	-300	300
+rpi	rpif	rpir	noid	-300	300
+rpe	rpef	rper	noid	-300	300
+tkt2	tkt2f	tkt2r	noid	-300	300
+tkt1	tkt1f	tkt1r	noid	-300	300
+tal	talf	talr	noid	-300	300
+SBA	SBAf	SBAr	noid	-300	300
+SBPase	SBPasef	SBPaser	noid	-300	300
+pdh	pdhf	pdhr	noid	-300	300
+cs	csf	csr	noid	-300	300
+acitl	acitlf	acitlr	noid	-300	300
+icdh	icdhf	icdhr	noid	-300	300
+akgdh	akgdhf	akgdhr	noid	-300	300
+sucoas	sucoasf	sucoasr	noid	-300	300
+sucd	sucdf	sucdr	noid	-300	300
+fum	fumf	fumr	noid	-300	300
+mdh	mdhf	mdhr	noid	-300	300
+PYRAla	PYRAlaf	PYRAlar	noid	-300	300
+OGAGlu	OGAGluf	OGAGlur	noid	-300	300
+OGAGln	OGAGlnf	OGAGlnr	noid	-300	300
+#
+# Definition of Target fragments
+//Target_fragments
+CO2	gcms	CO2_1	use	no
+GLC	gcms	GLC_1:2:3:4:5:6	use	no
+G6P	gcms	G6P_1:2:3:4:5:6	use	no
+F6P	gcms	F6P_1:2:3:4:5:6	use	no
+FBP	gcms	FBP_1:2:3:4:5:6	use	no
+GAP	gcms	GAP_1:2:3	use	no
+DHAP	gcms	DHAP_1:2:3	use	no
+BPG	gcms	BPG_1:2:3	use	no
+PGA	gcms	PGA_1:2:3	use	no
+PEP	gcms	PEP_1:2:3	use	no
+PYR	gcms	PYR_1:2:3	use	no
+LAC	gcms	LAC_1:2:3	use	no
+OAA	gcms	OAA_1:2:3:4	use	no
+MAL	gcms	MAL_1:2:3:4	use	no
+m6PG	gcms	m6PG_1:2:3:4:5:6	use	no
+Ru5P	gcms	Ru5P_1:2:3:4:5	use	no
+R5P	gcms	R5P_1:2:3:4:5	use	no
+X5P	gcms	X5P_1:2:3:4:5	use	no
+S7P	gcms	S7P_1:2:3:4:5:6:7	use	no
+SBP	gcms	SBP_1:2:3:4:5:6:7	use	no
+E4P	gcms	E4P_1:2:3:4	use	no
+AcCoA	gcms	AcCoA_1:2	use	no
+CitICit	gcms	CitICit_1:2:3:4:5:6	use	no
+OGA	gcms	OGA_1:2:3:4:5	use	no
+SuccCoA	gcms	SuccCoA_1:2:3:4	use	no
+Succ	gcms	Succ_1:2:3:4	use	no
+Fum	gcms	Fum_1:2:3:4	use	no
+Glu	gcms	Glu_1:2:3:4:5	use	no
+Ala	gcms	Ala_1:2:3	use	no
+Gln	gcms	Gln_1:2:3:4:5	use	no
+AcCoAcyt	gcms	AcCoAcyt_1:2	use	no
+//End
