@@ -1,3 +1,6 @@
+%% Preface: This code requires installation of the COBRA Toolbox
+% doi.org/10.1038/s41596-018-0098-2
+
 %% Load CCM_20240718  model and update constraints
 load("CCM__Model.mat")
 
@@ -5,7 +8,7 @@ load("CCM__Model.mat")
 tic
 options.nFiles=1;
 options.nPointsPerFile=1000000;
-[modelSampling,samples] = sampleCbModel_RL20240724(model,'SampledFluxes','ACHR',options);
+[modelSampling,samples] = sampleCbModel(model,'SampledFluxes','ACHR',options);
 toc
 
 %% Conduct rejection sampling
