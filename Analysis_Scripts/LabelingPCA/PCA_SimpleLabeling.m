@@ -59,7 +59,28 @@ set(gca,'TickDir','out')
 legend({'Variance captured in PC','Cummulative variance captured'},'Location','east')
 set(gca,'TickDir','out','FontSize',14,'LineWidth',1,'Xcolor','k','Ycolor','k')
 
-%% 2D PC plot
+%% 2D PC plot (v3)
+pc_x = 1;
+pc_y = 2;
+fluxNum = 2;
+
+data_PC_x = pca_Input*coeff(:,pc_x);
+data_PC2_y = pca_Input*coeff(:,pc_y);
+data_flux = fluxes(:,fluxNum);
+
+figure(1); clf; hold on
+plot2_PCA = scatter(data_PC_x,data_PC2_y,[],data_flux,'.');
+
+xlabel(['PC',num2str(pc_x),' (',num2str(explained(pc_x)),'%)'])
+ylabel(['PC',num2str(pc_y),' (',num2str(explained(pc_y)),'%)'])
+title('v_3 as a function of PCs')
+set(gca,'TickDir','out')
+
+clim([0,1])
+colorbar('Ticks', 0:.1:1,'TickLabels', ...
+    {'0','0.1','0.2','0.3','0.4','0.5','0.6','0.7','0.8','0.9','1.0'},'TickDirection','out');
+
+%% 2D PC plot (v2r)
 pc_x = 1;
 pc_y = 2;
 fluxNum = 3;
