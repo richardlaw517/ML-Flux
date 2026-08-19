@@ -65,13 +65,33 @@ def predictFluxesFromLabels(fullLabelSet,modelType):
                     'IN_GLC','IN_CO2','EX_CO2','hk','pgi','pfk','fba','tpi','gapd','pgk','eno','pyk','ldh','EX_DHAP','EX_PGA','EX_PYR','EX_LAC','EX_G6P','ppck','me','pc','g6pdh','gnd','rpi','rpe','tkt2','tkt1','tal','SBA','SBPase','EX_R5P','EX_OAA','pdh','IN_AC','cs','acitl','icdh','akgdh','sucoas','sucd','fum','mdh','PYR_Ala','EX_PYR_Ala','OGA_Glu','IN_Gln','IN_Glu','OGA_Gln','EX_Gln','IN_OAA','EX_OGA_Glu','EX_AC_cyt']
         kernelNet = np.loadtxt("Trained_Models/ANN_Labels_to_Fluxes/Kernels/KernelNet_CCM.txt")
         kernelXch = np.loadtxt("Trained_Models/ANN_Labels_to_Fluxes/Kernels/KernelXch_CCM.txt")
-    else: raise ValueError("Unexpected model name. Accepted models are 'Simple','UpperGly','Gly13C2H','GlyPPP', or 'MammalianCCM'")
+    elif modelType == 'mCM':
+        modelArchitectureFile = 'Trained_Models/ANN_Labels_to_Fluxes/mCM_ANN_noC2.json' # change this to the model with C2 yield input to use C2 yield input
+        modelWeightsFiles = 'Trained_Models/ANN_Labels_to_Fluxes/mCM_ANN_noC2.h5' # change this to the model with C2 yield input to use C2 yield input
+        net_flux = list(range(39)) 
+        exchange_flux = list(range(39,114))
+        freeList = ['EX_CO2','EX_PGA_Ser','PGA_serd','EX_FTHF','EX_OAA_Gly','EX_PGA_Cys','EX_PYR_Val','EX_PYR_Ala','EX_PYR_Leu','EX_PEP_Phe','EX_PEP_Tyr','EX_OGA_Glu','EX_OGA_Pro','EX_OGA_Gln','EX_OGA_Arg','OAA_Thr','EX_OAA_Lys','EX_OAA_Asp','EX_OAA_Thr','EX_OAA_Ile','EX_OAA_Asn','EX_OAA_Met','EX_OAA_UMP','EX_OAA_dTTP','EX_G6P','EX_F6P_ACGAM1P','EX_DHAP_GLYC3P','R5P_PRPP','R5P_ATP','EX_R5P_ATP','EX_AC','EX_SUCC','ppc','me','oaadc','g6pdh','eda','sbpase','cs',
+                    'hk','pgi','pfk','fba','tpi','gapd','pgk','eno','pyk','gnd','rpi','rpe','tkt2','tkt1','tal','sba','pdh','icdh','akgdh','sucoas','sucd','fum','mdh','icl','mals','PGA_PSer','PGA_Ser','PGA_serd','PGA_Gly','OAA_glycl','PGA_Cys','PYR_Ala','PYR_AKV','PYR_Val','PYR_IPPM','PYR_Leu','PEP_SKM','PEP_Chor','PEP_PHPYR','PEP_Phe','PEP_Tyr','PEP_Trp','OGA_Glu','OGA_Pro','OGA_Gln','OGA_AcGlu','OGA_ORN','OGA_CITRL','OGA_Arg','OAA_Gly','OAA_Asp','OAA_HomoSer','OAA_Thr','OAA_Asn','OAA_Ile','OAA_Met','OAA_Lys','OAA_CBASP','OAA_OROT','OAA_UMP','OAA_dTTP','F6P_GAM6P','F6P_ACGAM1P','DHAP_GLYC3P','R5P_PRPP','R5P_His','R5P_AICAR','R5P_ATP','ppc','me','oaadc','g6pdh','eda','sbpase','cs']
+        fullList = ['IN_CO2','IN_GLC','hk','pgi','pfk','fba','tpi','gapd','pgk','eno','pyk','gnd','rpi','rpe','tkt2','tkt1','tal','sba','pdh','icdh','akgdh','sucoas','sucd','fum','mdh','icl','mals','EX_CO2','PGA_PSer','PGA_Ser','EX_PGA_Ser','PGA_serd','PGA_Gly','OAA_glycl','EX_FTHF','EX_OAA_Gly','PGA_Cys','EX_PGA_Cys','PYR_Ala','PYR_AKV','PYR_Val','PYR_IPPM','PYR_Leu','EX_PYR_Val','EX_PYR_Ala','EX_PYR_Leu','PEP_SKM','PEP_Chor','PEP_PHPYR','PEP_Phe','PEP_Tyr','EX_PEP_Phe','EX_PEP_Tyr','PEP_Trp','EX_PEP_Trp','OGA_Glu','OGA_Pro','OGA_Gln','OGA_AcGlu','OGA_ORN','OGA_CITRL','OGA_Arg','EX_OGA_Glu','EX_OGA_Pro','EX_OGA_Gln','EX_OGA_Arg','OAA_Gly','OAA_Asp','OAA_HomoSer','OAA_Thr','OAA_Asn','OAA_Ile','OAA_Met','OAA_Lys','EX_OAA_Lys','EX_OAA_Asp','EX_OAA_Thr','EX_OAA_Ile','EX_OAA_Asn','EX_OAA_Met','OAA_CBASP','OAA_OROT','OAA_UMP','OAA_dTTP','EX_OAA_UMP','EX_OAA_dTTP','EX_G6P','F6P_GAM6P','F6P_ACGAM1P','EX_F6P_ACGAM1P','DHAP_GLYC3P','EX_DHAP_GLYC3P','R5P_PRPP','R5P_His','EX_R5P_His','R5P_AICAR','R5P_ATP','EX_R5P_ATP','EX_AC','EX_SUCC','ppc','me','oaadc','g6pdh','eda','sbpase','cs',
+                    'IN_CO2','IN_GLC','hk','pgi','pfk','fba','tpi','gapd','pgk','eno','pyk','gnd','rpi','rpe','tkt2','tkt1','tal','sba','pdh','icdh','akgdh','sucoas','sucd','fum','mdh','icl','mals','EX_CO2','PGA_PSer','PGA_Ser','EX_PGA_Ser','PGA_serd','PGA_Gly','OAA_glycl','EX_FTHF','EX_OAA_Gly','PGA_Cys','EX_PGA_Cys','PYR_Ala','PYR_AKV','PYR_Val','PYR_IPPM','PYR_Leu','EX_PYR_Val','EX_PYR_Ala','EX_PYR_Leu','PEP_SKM','PEP_Chor','PEP_PHPYR','PEP_Phe','PEP_Tyr','EX_PEP_Phe','EX_PEP_Tyr','PEP_Trp','EX_PEP_Trp','OGA_Glu','OGA_Pro','OGA_Gln','OGA_AcGlu','OGA_ORN','OGA_CITRL','OGA_Arg','EX_OGA_Glu','EX_OGA_Pro','EX_OGA_Gln','EX_OGA_Arg','OAA_Gly','OAA_Asp','OAA_HomoSer','OAA_Thr','OAA_Asn','OAA_Ile','OAA_Met','OAA_Lys','EX_OAA_Lys','EX_OAA_Asp','EX_OAA_Thr','EX_OAA_Ile','EX_OAA_Asn','EX_OAA_Met','OAA_CBASP','OAA_OROT','OAA_UMP','OAA_dTTP','EX_OAA_UMP','EX_OAA_dTTP','EX_G6P','F6P_GAM6P','F6P_ACGAM1P','EX_F6P_ACGAM1P','DHAP_GLYC3P','EX_DHAP_GLYC3P','R5P_PRPP','R5P_His','EX_R5P_His','R5P_AICAR','R5P_ATP','EX_R5P_ATP','EX_AC','EX_SUCC','ppc','me','oaadc','g6pdh','eda','sbpase','cs']
+        kernelNet = np.loadtxt("Trained_Models/ANN_Labels_to_Fluxes/Kernels/kernel_net_mCM.txt")
+        kernelXch = np.loadtxt("Trained_Models/ANN_Labels_to_Fluxes/Kernels/kernel_xch_mCM.txt")
+    else: raise ValueError("Unexpected model name. Accepted models are 'Simple','UpperGly','Gly13C2H','GlyPPP', 'MammalianCCM', or 'mCM'")
     
     # Load model architecture
-    json_file = open(modelArchitectureFile, 'r')
-    loaded_model_json = json_file.read()
-    json_file.close()
-    loadedModel = model_from_json(loaded_model_json)
+    # json_file = open(modelArchitectureFile, 'r')
+    # loaded_model_json = json_file.read()
+    # json_file.close()
+    # loadedModel = model_from_json(loaded_model_json)
+
+    # Load model architecture
+    from keras.models import Sequential, model_from_json
+
+    with open(modelArchitectureFile, 'r') as json_file:
+        loaded_model_json = json_file.read()
+
+    # Add Sequential to custom_objects
+    loadedModel = model_from_json(loaded_model_json, custom_objects={"Sequential": Sequential})
 
     # Load weights into model
     loadedModel.load_weights(modelWeightsFiles) 
@@ -79,9 +99,15 @@ def predictFluxesFromLabels(fullLabelSet,modelType):
     # Compile model and optimizer
     loadedModel.compile(optimizer='adam', loss='mae', metrics=[None])
 
+    
+
     # Predict fluxes and transform output into real flux values
-    if modelType == 'MammalianCCM':
+    if modelType in ['MammalianCCM']:
         freeFluxes = loadedModel.predict(fullLabelSet)
+    elif modelType in ['mCM']:
+        max_fluxes = np.loadtxt("Trained_Models/ANN_Labels_to_Fluxes/max_flux_mCM.dat") 
+        freeFluxes = loadedModel.predict(fullLabelSet)
+        freeFluxes = np.multiply(freeFluxes, np.transpose(max_fluxes))
     else:
         freeFluxes = loadedModel.predict(fullLabelSet)
         freeFluxes[:,net_flux] = np.piecewise(freeFluxes[:,net_flux],[freeFluxes[:,net_flux]<0,freeFluxes[:,net_flux]<0.97997,freeFluxes[:,net_flux]>=0.97997],[-4.5,lambda freeFluxes: np.log(freeFluxes/(1-freeFluxes)),lambda freeFluxes: 4**freeFluxes])
@@ -95,3 +121,4 @@ def predictFluxesFromLabels(fullLabelSet,modelType):
     fullFluxes = np.transpose(np.concatenate((fullNet,fullXch)))
 
     return freeFluxes, freeList, fullFluxes, fullList
+
