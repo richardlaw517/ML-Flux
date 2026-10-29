@@ -1,7 +1,13 @@
 %% Load Data
 model = 'Simple'; % Change this to Simple, UpperGly, Glycolysis, GlyPPP, or CCM
 
-% Files can be reproduced via Data_Generation_and_Simulation
+% Source data files are either provided on the repo or can also be reproduced via:
+%   1) Generation of samples fluxes in Data_Generation_and_Simulation/SimulationScripts
+%   2) Splitting into training, testing, and validation sets in
+%      Training_Scripts/ at the random seed provided in the script
+%   3  Prediction of labels by running the first block of Flux_Prediction/runML-Flux.py, which
+%      returns the variable fullLabelSeet to be imported to predictedLabels here
+
 predictedLabels = load(strcat(model,'_FullPredictedLabels.txt'));
 trueLabels = load(strcat('../../Test_Full_MLFlux/TestingData/',model,'_Labels_100_Seed0.txt'));
 labelsToKeep = readmatrix(strcat('../../../../InformationSheets/',model,'_Labels_to_Keep.xlsx'));

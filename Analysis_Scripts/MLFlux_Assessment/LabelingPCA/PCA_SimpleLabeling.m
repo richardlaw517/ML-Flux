@@ -42,7 +42,7 @@ loadingsOneTracerSummedMets = array2table(loadingsOneTracerSummedMets);
 loadingsOneTracerSummedMets = [metList,loadingsOneTracerSummedMets];
 loadingsOneTracerSummedMets.Properties.VariableNames = ["Isotopomer","PC1","PC2","Weighted loadings"];
 
-%% Scree plot
+%% Scree plot (SuppFig.1a)
 screeData = [explained(1:2);sum(explained(3:end))];
 cummulativeExplanation = cumsum(screeData);
 
@@ -59,7 +59,7 @@ set(gca,'TickDir','out')
 legend({'Variance captured in PC','Cummulative variance captured'},'Location','east')
 set(gca,'TickDir','out','FontSize',14,'LineWidth',1,'Xcolor','k','Ycolor','k')
 
-%% 2D PC plot (v3)
+%% 2D PC plot (SuppFig.1b, v3)
 pc_x = 1;
 pc_y = 2;
 fluxNum = 2;
@@ -80,7 +80,7 @@ clim([0,1])
 colorbar('Ticks', 0:.1:1,'TickLabels', ...
     {'0','0.1','0.2','0.3','0.4','0.5','0.6','0.7','0.8','0.9','1.0'},'TickDirection','out');
 
-%% 2D PC plot (v2r)
+%% 2D PC plot (SuppFig.1b, v2r)
 pc_x = 1;
 pc_y = 2;
 fluxNum = 3;

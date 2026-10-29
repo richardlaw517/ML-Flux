@@ -1,11 +1,22 @@
 %% Load Data
-model = "Simple"; % Change this to Simple, UpperGly, Glycolysis, GlyPPP, or CCM
+model = "CCM"; % Simple,UpperGly,Glycolysis,GlyPPP,CCM
+
+% Source data files are either provided on the repo or can also be reproduced via:
+%   1) Generation of samples fluxes in Data_Generation_and_Simulation/SimulationScripts
+%   2) Splitting into training, testing, and validation sets in
+%      Training_Scripts/ at the random seed provided in the script
+%   3  Prediction by running through Flux_Prediction/runML-Flux.py, which
+%      returns the variable fullFluxes to be loaded into this script as
+%      predictedFullFluxes
+%           a) predictedFullFluxesFromTrueLabels is obtained by inputting
+%           true umasked test labeling data generated in step 2) in
+%           runML-Flux.py
 
 predictedFullFluxes = load(strcat('PredictedData/',model,'_FullPredictedFluxes_Inpaint_Unique.txt'));
 predictedFullFluxesFromTrueLabels = load(strcat('PredictedData/',model,'_FullPredictedFluxesFromTrueLabels.txt'));
 trueFreeFluxes = load(strcat('TestingData/',model,'_Fluxes_100_Seed0.txt'));
-kernelNet = load(strcat('TestingModels/FluxPrediction/Kernels/KernelNet_',model,'.txt'));
-kernelXch = load(strcat('TestingModels/FluxPrediction/Kernels/KernelXch_',model,'.txt'));
+kernelNet = load(strcat('../ANN_Analysis/KernelNet_',model,'.txt'));
+kernelXch = load(strcat('../ANN_Analysis/FluxPrediction/Kernels/KernelXch_',model,'.txt'));
 
 %% Get full flux set for true free fluxes and normalize all fluxes
 trueFullFluxes = zeros(size(predictedFullFluxes));
@@ -57,7 +68,7 @@ diff_std_FromScratched = diff_std_FromScratched_ae;
 diff_avg_FromTrue = diff_avg_FromTrue_ae;
 diff_std_FromTrue = diff_std_FromTrue_ae;
 
-%% Get boxcharts of the errors
+%% Get boxcharts of the errors (Fig.4b)
 
 reactionsList = load("FullReactionNames.mat",strcat(model));
 reactionsList = reactionsList.(strcat(model));
@@ -99,7 +110,7 @@ ax.YAxis.Scale ="log";
 set(gcf,'Position',[100,100,1200,600])
 set(gca,'TickDir','out')
 
-%% Get boxcharts of the errors (Split by magnitude - cutoff 0.05)
+%% Get boxcharts of the errors split by magnitude (SuppFig.6)
 avg_true = mean(abs(trueFullFluxesFromTrueLabels));
 mape_list = find(avg_true>=0.05);
 mae_list = find(avg_true<0.05);
@@ -144,7 +155,7 @@ set(gcf,'Position',[100,100,1200,600])
 set(gca,'TickDir','out')
 
 
-%% Stacked histogram from full and scratched (For GlyPPP and CCM model)
+%% Stacked histogram from full and scratched (Fig.4c)
 
 % All non-GlyPPP non_CCM models
 % A=diff_avg_FromTrue;
