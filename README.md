@@ -1,5 +1,5 @@
 # ML-Flux
-ML-Flux is a machine-learning software for determination of metabolic flux distributions from isotope labeling patterns. ML-Flux is available for direct use online on metabolicflux.org, where there are no specific system requiremts or need for installation of software. A detailed manual for online-use, as well as a demo dataset, is available on the website. The code for the core software used on metabolicflux.org is available in this repository.
+ML-Flux is a machine-learning software for determination of metabolic flux distributions from isotope labeling patterns. ML-Flux is available for direct use online on metabolicflux.org, where there are no specific system requiremts or need for installation of software. A detailed manual for online-use, as well as a demo dataset, is available on the website. The code for the core software applied on metabolicflux.org is available in this repository, as well as scripts pertaining to the generation, storage, and analysis of source data for the related publication
 
 # System requirements and installation
 The following Python dependencies (and the most recently used versions) are required for local operation:
@@ -10,6 +10,7 @@ The following Python dependencies (and the most recently used versions) are requ
 * scikit-learn (1.5.1)
 * scipy (1.14.0)
 * tensorflow (2.10.0)
+A requirements.txt file is also provided for a more precise replica of packages used
 There are no non-standard hardware dependencies.
 
 There are no specific installation instructions. The code may be directly cloned from this repository

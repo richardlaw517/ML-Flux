@@ -1,5 +1,5 @@
 %% Load Data
-model = 'Simple'; % Change this to Simple, UpperGly, Glycolysis, GlyPPP, or CCM
+model = 'Glycolysis'; % Change this to Simple, UpperGly, Glycolysis, GlyPPP, or CCM
 
 % Source data files are either provided on the repo or can also be reproduced via:
 %   1) Generation of samples fluxes in Data_Generation_and_Simulation/SimulationScripts
@@ -7,18 +7,9 @@ model = 'Simple'; % Change this to Simple, UpperGly, Glycolysis, GlyPPP, or CCM
 %      Training_Scripts/ at the random seed provided in the script
 %   3  Prediction of labels by running the first block of Flux_Prediction/runML-Flux.py, which
 %      returns the variable fullLabelSeet to be imported to predictedLabels here
+% A .mat file for Glycolysis is shown as an example for variable formats
 
-predictedLabels = load(strcat(model,'_FullPredictedLabels.txt'));
-trueLabels = load(strcat('../../Test_Full_MLFlux/TestingData/',model,'_Labels_100_Seed0.txt'));
-labelsToKeep = readmatrix(strcat('../../../../InformationSheets/',model,'_Labels_to_Keep.xlsx'));
-labelsToKeep = find(labelsToKeep == 1);
-
-%% Process labels to keep (an extra step if doing CCM 3Tracer)
-indices = reshape(1:4800, 160, []);
-indices = indices(1:24,:);
-indices = indices(:);
-labelsToKeep = labelsToKeep(indices);
-labelsToKeep = find(labelsToKeep == 1);
+load('PCNN/PCNN_Gly.mat')
 
 %% Get sum of labels in each row
 sumPredictedLabels = sum(predictedLabels,2);
@@ -42,8 +33,8 @@ scatterhist(sumPredictedLabels-trueSum,mae_FullLabels,'NBins',[20,20]);
 set(gcf,'Position',[100,100,800,800]);
 xlabel('Sum of predicted labels')
 ylabel('Mean absolute error of labeling')
-xlim([-4,6.5])
-ylim([0,0.04])
+xlim([-0.4,0.2])
+ylim([0,0.05])
 set(gca,'TickDir','out')
 
 %% Plot color density chart
@@ -54,11 +45,11 @@ set(gcf,'Position',[100,100,800,800]);
 xlabel('Sum of predicted labels')
 ylabel('Mean absolute error of labeling')
 f.CLim=[0,250];
-xlim([-4,6.5])
-ylim([0,0.04])
+xlim([-0.4,0.2])
+ylim([0,0.05])
 
 
-%% Plot together
+%% Plot together (Fig. 4d)
 figure(5)
 clf
 set(gcf,'Position',[100,100,800,800]);
